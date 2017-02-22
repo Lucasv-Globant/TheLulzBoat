@@ -21,6 +21,7 @@
 		A0F24DFF1E5DC7BC000A0117 /* DrawerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F24DFE1E5DC7BC000A0117 /* DrawerProtocol.swift */; };
 		A0F24E011E5DC9F8000A0117 /* 5sdesing.json in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E001E5DC9F8000A0117 /* 5sdesing.json */; };
 		A0F24E031E5DCAD9000A0117 /* ServiceInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F24E021E5DCAD9000A0117 /* ServiceInitializer.swift */; };
+		A0F24E051E5E092F000A0117 /* shader_water_reflection.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		A0F24DFE1E5DC7BC000A0117 /* DrawerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerProtocol.swift; sourceTree = "<group>"; };
 		A0F24E001E5DC9F8000A0117 /* 5sdesing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 5sdesing.json; sourceTree = "<group>"; };
 		A0F24E021E5DCAD9000A0117 /* ServiceInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInitializer.swift; sourceTree = "<group>"; };
+		A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader_water_reflection.fsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		A0F24DC71E5CC97D000A0117 /* SpriteKit-PoC */ = {
 			isa = PBXGroup;
 			children = (
+				A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */,
 				A0F24E001E5DC9F8000A0117 /* 5sdesing.json */,
 				A0F24E021E5DCAD9000A0117 /* ServiceInitializer.swift */,
 				A0F24DFE1E5DC7BC000A0117 /* DrawerProtocol.swift */,
@@ -261,6 +264,7 @@
 				A0F24DD61E5CC97D000A0117 /* Assets.xcassets in Resources */,
 				A0F24DD91E5CC97D000A0117 /* LaunchScreen.storyboard in Resources */,
 				A0F24DCD1E5CC97D000A0117 /* Actions.sks in Resources */,
+				A0F24E051E5E092F000A0117 /* shader_water_reflection.fsh in Resources */,
 				A0F24E011E5DC9F8000A0117 /* 5sdesing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,6 +548,7 @@
 				A0F24DF51E5CC97E000A0117 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0F24DF61E5CC97E000A0117 /* Build configuration list for PBXNativeTarget "SpriteKitPoCTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +557,7 @@
 				A0F24DF81E5CC97E000A0117 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0F24DF91E5CC97E000A0117 /* Build configuration list for PBXNativeTarget "SpriteKitPoCUITests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +566,7 @@
 				A0F24DFB1E5CC97E000A0117 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
