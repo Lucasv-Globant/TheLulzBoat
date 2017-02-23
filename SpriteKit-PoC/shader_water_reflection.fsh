@@ -1,6 +1,6 @@
 
-
 /*
+
 // Digitized
 // By: Brandon Fogerty
 // bfogerty@gmail.com
@@ -9,9 +9,8 @@
 precision mediump float;
 #endif
 
-uniform float time;
-uniform vec2 mouse;
-uniform vec2 resolution;
+//uniform float time;
+//uniform vec2 resolution;
 
 float random( vec2 p )
 {
@@ -30,8 +29,8 @@ float worley( vec2 p, float timeSpeed )
       float f1 = random( test_cell );
       float f2 = random( test_cell + vec2(1.0,83.0) );
 
-      float xp = mix( f1, f2, sin(time*timeSpeed) );
-      float yp = mix( f1, f2, cos(time*timeSpeed) );
+      float xp = mix( f1, f2, sin(u_time*timeSpeed) );
+      float yp = mix( f1, f2, cos(u_time*timeSpeed) );
 
       vec2 c = test_cell + vec2(xp,yp);
 
@@ -63,9 +62,9 @@ float worley2( vec2 p )
 
 void main( void )
 {
-  vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
+  vec2 uv = (v_tex_coord) * 2.0 - 1.0;
 
-  float t = worley( gl_FragCoord.xy / 20.0,1. );
+  float t = worley( v_tex_coord, 1. );//float t = worley( gl_FragCoord.xy / 20.0,1. );
   vec3 finalColor = vec3( t,t,0) * 2.0;
 
 

@@ -10,57 +10,63 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    
+
+    var isZoomedIn = false
 
     override func didMove(to view: SKView) {
-      let ship = SKSpriteNode(imageNamed: "boat-lucas-small")
-      ship.size = CGSize(width: 80, height: 266)
+
+      /////////////////////////////////////////////////////////////////
+      //Setup a container sprite for the shader that makes the movement
+      //let shaderContainerMove = SKSpriteNode(imageNamed: "dummypixel.png")
+      //shaderContainerMove.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
+      //shaderContainerMove.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+      //self.addChild(shaderContainerMove)
+
+      //Create the shader from a shader-file
+      //let shaderMove : SKShader = SKShader(fileNamed: "shader_water_movement.fsh")
+
+      //Set vairiables that are used in the shader script
+      //shaderMove.uniforms = [ SKUniform(name: "size", float: GLKVector3(v: (Float(self.frame.size.width*1.5),Float(self.frame.size.height*1.5),0)))]
+
+      //add the shader to the sprite
+      //shaderContainerMove.shader = shaderMove
+
+      ////////////////////////////////////////////////////////////////////
+      //Setup a container sprite for the shader that makes the reflections
+      let shaderContainerReflect = SKSpriteNode(imageNamed: "dummypixel.png")
+      shaderContainerReflect.position = CGPoint(x: 0/*self.frame.size.width/2*/, y: 0/*self.frame.size.width/2*/)
+      shaderContainerReflect.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+      self.addChild(shaderContainerReflect)
+      //Create the shader from a shader-file
+      let shaderReflect = SKShader(fileNamed: "shader_water_reflection.fsh")
+      //Set variables that are used in the shader script
+      shaderReflect.uniforms = [SKUniform(name: "size", float: GLKVector3(v: (Float(self.frame.size.width),Float(self.frame.size.height),0)))]
+      //add the shader to the sprite
+      shaderContainerReflect.shader = shaderReflect
+      shaderContainerReflect.zPosition = -1
+
+      //////////////
+      // The Boat
+      let ship = SKSpriteNode(imageNamed: "boat-xxxhdpi")
+      ship.size = CGSize(width: 230, height: 750)
       ship.position = CGPoint(x:0/*self.frame.size.width / 2*/, y:0/*self.frame.size.height / 2*/)
       self.addChild(ship)
-      var path = CGMutablePath()
-      path.move(to: CGPoint(x: 0, y: 0))
-      path.addLine(to: CGPoint(x:50,y:100))
-
-      /*
-      var followLine = SKAction.follow(path, asOffset: true, orientToPath: false, duration: 3.0)
-      var reversedLine = followLine.reversed()
-      var square = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 100, height: 100))
-      var followSquare = SKAction.follow(square.cgPath, asOffset: true, orientToPath: false, duration:5.0)
-      */
-      //var circle = UIBezierPath(roundedRect: CGRect(x:0,y:0,width:300,height:300), cornerRadius: 150)
-      //var followCircle = SKAction.follow(circle.cgPath, asOffset: true, orientToPath: true, speed: 50.0)//SKAction.follow(circle.cgPath, asOffset: true, orientToPath: true, duration: 5.0)+
-      //ship.run(SKAction.sequence([followCircle]))
+      ship.zPosition = 1
 
 
-/*
-       //Setup a container sprite for the shader that makes the reflections
-       SKSpriteNode *shaderContainer_reflect = [SKSpriteNode spriteNodeWithImageNamed:@"dummypixel.png"];
-       shaderContainer_reflect.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-       shaderContainer_reflect.size = CGSizeMake(self.frame.size.width, self.frame.size.height);
-       [self addChild:shaderContainer_reflect];
-       //Create the shader from a shader-file
-       SKShader* shader_reflect = [SKShader shaderWithFileNamed:@"shader_water_reflection.fsh"];
-       //Set vairiables that are used in the shader script
-       shader_reflect.uniforms = @[
-       [SKUniform uniformWithName:@"size" floatVector3:GLKVector3Make(self.frame.size.width, self.frame.size.height, 0)],
-       ];
-       //add the shader to the sprite
-       shaderContainer_reflect.shader = shader_reflect;
+      ////////////////////////
+      // Boat moving on path
+      //var path = CGMutablePath()
+      //path.move(to: CGPoint(x: 0, y: 0))
+      //path.addLine(to: CGPoint(x:50,y:100))
+      //let shipPath = loadPathFor4InchesDisplays()
+      //let followShipPath = SKAction.follow(shipPath!, asOffset: true, orientToPath: true, speed: 20.0)
+      //ship.run(SKAction.sequence([followShipPath, followShipPath.reversed()]))
 
-       
-       
-       //just add sand sprite only to look good :-)
-       SKSpriteNode *beach = [SKSpriteNode spriteNodeWithImageNamed:@"blue_bg.png"];
-       beach.size = self.size;
-       beach.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2-100);
-       [self addChild:beach];
- */
-
-
-      let shipPath = loadPathFor4InchesDisplays()
-      let followShipPath = SKAction.follow(shipPath!, asOffset: true, orientToPath: true, speed: 20.0)
-
-      ship.run(SKAction.sequence([followShipPath, followShipPath.reversed()]))
+      let cameraNode = SKCameraNode()
+      cameraNode.position = CGPoint(x: 0/*(scene?.size.width)!/2*/, y: 0/*(scene?.size.height)!/2*/)
+      scene?.addChild(cameraNode)
+      scene?.camera = cameraNode
 
     }
 
@@ -82,7 +88,13 @@ class GameScene: SKScene {
       return bezierPath.cgPath
     }
 
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
+    let newScale = isZoomedIn ? 2 : 0.5
+    isZoomedIn = !isZoomedIn
+    let zoomInAction = SKAction.scale(by: CGFloat(newScale), duration: 1)
+    scene?.camera?.run(zoomInAction)
+  }
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
