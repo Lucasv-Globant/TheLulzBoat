@@ -73,9 +73,11 @@ class GameViewController: UIViewController {
 
 
   @IBAction func btnRainyNightAction(_ sender: Any) {
+    shipScene.rainyNight()
   }
 
   @IBAction func btnClearNightAction(_ sender: Any) {
+    shipScene.clearNight()
   }
 
 }

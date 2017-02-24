@@ -25,6 +25,10 @@ class GameScene: SKScene {
 
   var rain : SKEmitterNode!
   var darkCloud: SKSpriteNode!
+  var darkCloud2: SKSpriteNode!
+  var darkCloud3: SKSpriteNode!
+  var dimPanel: SKSpriteNode!
+
   override func didMove(to view: SKView) {
 
       ////////////////////////////////////////////////////////////////////
@@ -167,48 +171,107 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
 
+
+  func addRain() {
+    if rain == nil {
+      rain = SKEmitterNode(fileNamed: "RainParticle.sks")
+    }
+    rain?.position = CGPoint(x: 300, y: self.frame.size.height)
+    rain?.zPosition = 10
+    self.addChild(rain!)
+
+    if darkCloud == nil {
+      darkCloud = SKSpriteNode(imageNamed: "cloud")
+      let cloudHeight = self.frame.size.height / 2
+      let cloudWidth = cloudHeight*2
+      darkCloud.size = CGSize(width: cloudWidth, height: cloudHeight)
+      let cloudPosX = -40
+      let cloudPosY = Int(self.frame.size.height/2)
+      darkCloud.position = CGPoint(x:cloudPosX, y:cloudPosY)
+      darkCloud.name = "cloud"
+      darkCloud.zPosition = 11
+
+      darkCloud2 = SKSpriteNode(imageNamed: "cloud")
+      let cloud2Height = self.frame.size.height / 2
+      let cloud2Width = cloud2Height*2
+      darkCloud2.size = CGSize(width: cloud2Width, height: cloud2Height)
+      let cloud2PosX = self.frame.size.width * 0.7
+      let cloud2PosY = 120
+      darkCloud2.position = CGPoint(x:Int(cloud2PosX), y:Int(cloud2PosY))
+      darkCloud2.name = "cloud2"
+      darkCloud2.zPosition = 11
+
+      darkCloud3 = SKSpriteNode(imageNamed: "cloud")
+      let cloud3Height = self.frame.size.height / 2
+      let cloud3Width = cloud3Height*2
+      darkCloud3.size = CGSize(width: cloud3Width, height: cloud3Height)
+      let cloud3PosX = self.frame.size.width * -0.7
+      let cloud3PosY = self.frame.size.height * -0.2
+      darkCloud3.position = CGPoint(x:Int(cloud3PosX), y:Int(cloud3PosY))
+      darkCloud3.name = "cloud3"
+      darkCloud3.zPosition = 11
+
+    }
+    self.addChild(darkCloud)
+    self.addChild(darkCloud2)
+    self.addChild(darkCloud3)
+
+  }
+
+  func removeRain() {
+    if (rain != nil) && (darkCloud != nil) {
+      rain?.removeFromParent()
+      darkCloud?.removeFromParent()
+      darkCloud2?.removeFromParent()
+      darkCloud3?.removeFromParent()
+    }
+
+  }
+
+  func addNight() {
+    if dimPanel == nil {
+      dimPanel = SKSpriteNode(color: UIColor.black, size: self.size)
+      dimPanel.alpha = 0.55
+      dimPanel.zPosition = 100
+      dimPanel.position = CGPoint(x:0,y:0)//x: self.size.width/2, y: self.size.height/2)
+    }
+    self.addChild(dimPanel)
+  }
+
+  func removeNight() {
+    if dimPanel != nil {
+      dimPanel.removeFromParent()
+    }
+  }
+
   func rainyDay() {
     if weather != weatherCondition.rainyDay {
-      if rain == nil {
-      rain = SKEmitterNode(fileNamed: "RainParticle.sks")
-      }
-      rain?.position = CGPoint(x: 300, y: self.frame.size.height)
-      rain?.zPosition = 10
-      //rain?.particlePositionRange = CGVector(dx: 0, dy: 0)
-      self.addChild(rain!)
-
-      if darkCloud == nil {
-        darkCloud = SKSpriteNode(imageNamed: "cloud")
-        let cloudHeight = self.frame.size.height / 4
-        let cloudWidth = cloudHeight*2
-        darkCloud.size = CGSize(width: cloudWidth, height: cloudHeight)
-        let cloudPosX = -40
-        let cloudPosY = 400
-        darkCloud.position = CGPoint(x:cloudPosX, y:cloudPosY)
-        darkCloud.name = "cloud"
-        self.addChild(darkCloud)
-        darkCloud.zPosition = 11
-      }
+      addRain()
+      removeNight()
     }
     weather = weatherCondition.rainyDay
   }
 
   func clearDay() {
     if weather != weatherCondition.clearDay {
-      rain?.removeFromParent()
-      darkCloud?.removeFromParent()
+      removeNight()
+      removeRain()
     }
     weather = weatherCondition.clearDay
   }
 
   func clearNight() {
     if weather != weatherCondition.clearNight {
+      addNight()
+      removeRain()
     }
     weather = weatherCondition.clearNight
   }
 
   func rainyNight() {
     if weather != weatherCondition.rainyNight {
+      addNight()
+      addRain()
     }
     weather = weatherCondition.rainyNight
   }
