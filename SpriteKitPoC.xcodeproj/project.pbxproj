@@ -23,6 +23,8 @@
 		A0F24E031E5DCAD9000A0117 /* ServiceInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F24E021E5DCAD9000A0117 /* ServiceInitializer.swift */; };
 		A0F24E051E5E092F000A0117 /* shader_water_reflection.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */; };
 		A0F24E071E5F16B5000A0117 /* shader_water_movement.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E061E5F16B5000A0117 /* shader_water_movement.fsh */; };
+		A0F24E091E6066C3000A0117 /* water.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E081E6066C3000A0117 /* water.atlas */; };
+		A0F24E0B1E609FBC000A0117 /* RainParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F24E0A1E609FBC000A0117 /* RainParticle.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		A0F24E021E5DCAD9000A0117 /* ServiceInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInitializer.swift; sourceTree = "<group>"; };
 		A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader_water_reflection.fsh; sourceTree = "<group>"; };
 		A0F24E061E5F16B5000A0117 /* shader_water_movement.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader_water_movement.fsh; sourceTree = "<group>"; };
+		A0F24E081E6066C3000A0117 /* water.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = water.atlas; sourceTree = "<group>"; };
+		A0F24E0A1E609FBC000A0117 /* RainParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainParticle.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,7 @@
 		A0F24DC71E5CC97D000A0117 /* SpriteKit-PoC */ = {
 			isa = PBXGroup;
 			children = (
+				A0F24E081E6066C3000A0117 /* water.atlas */,
 				A0F24E041E5E092F000A0117 /* shader_water_reflection.fsh */,
 				A0F24E061E5F16B5000A0117 /* shader_water_movement.fsh */,
 				A0F24E001E5DC9F8000A0117 /* 5sdesing.json */,
@@ -127,6 +132,7 @@
 				A0F24DCE1E5CC97D000A0117 /* GameScene.swift */,
 				A0F24DD01E5CC97D000A0117 /* GameViewController.swift */,
 				A0F24DD21E5CC97D000A0117 /* Main.storyboard */,
+				A0F24E0A1E609FBC000A0117 /* RainParticle.sks */,
 				A0F24DD51E5CC97D000A0117 /* Assets.xcassets */,
 				A0F24DD71E5CC97D000A0117 /* LaunchScreen.storyboard */,
 				A0F24DDA1E5CC97D000A0117 /* Info.plist */,
@@ -263,9 +269,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0F24DD41E5CC97D000A0117 /* Main.storyboard in Resources */,
+				A0F24E091E6066C3000A0117 /* water.atlas in Resources */,
 				A0F24DCB1E5CC97D000A0117 /* GameScene.sks in Resources */,
 				A0F24DD61E5CC97D000A0117 /* Assets.xcassets in Resources */,
 				A0F24E071E5F16B5000A0117 /* shader_water_movement.fsh in Resources */,
+				A0F24E0B1E609FBC000A0117 /* RainParticle.sks in Resources */,
 				A0F24DD91E5CC97D000A0117 /* LaunchScreen.storyboard in Resources */,
 				A0F24DCD1E5CC97D000A0117 /* Actions.sks in Resources */,
 				A0F24E051E5E092F000A0117 /* shader_water_reflection.fsh in Resources */,

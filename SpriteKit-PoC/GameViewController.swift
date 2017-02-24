@@ -12,17 +12,21 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+  var shipScene : GameScene!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 
                 // Present the scene
                 view.presentScene(scene)
+                shipScene = scene
+
             }
             
             view.ignoresSiblingOrder = true
@@ -53,5 +57,23 @@ class GameViewController: UIViewController {
         return true
     }
 
+
+  @IBAction func ZoomBtnAction(_ sender: Any) {
+    shipScene.toggleZoom()
+  }
+
+  @IBAction func btnClearDayAction(_ sender: Any) {
+  }
+
+
+  @IBAction func btnRainyDayAction(_ sender: Any) {
+  }
+
+
+  @IBAction func btnRainyNightAction(_ sender: Any) {
+  }
+
+  @IBAction func btnClearNightAction(_ sender: Any) {
+  }
 
 }

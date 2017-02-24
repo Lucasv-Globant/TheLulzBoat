@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +21,63 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rhe-LT-PAv" userLabel="Btn_Clear_Day">
+                                <rect key="frame" x="24" y="588" width="105" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="105" id="HXh-pu-3Hd"/>
+                                    <constraint firstAttribute="height" constant="71" id="KX8-Qw-iPN"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="btn_clear_day"/>
+                                <connections>
+                                    <action selector="btnClearDayAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gyz-rU-fm4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXH-hk-7OP" userLabel="Btn_Rainy_Day">
+                                <rect key="frame" x="262" y="588" width="105" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="3aQ-jf-bAg"/>
+                                    <constraint firstAttribute="width" constant="105" id="VlJ-XD-K3s"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="btn_rain_day"/>
+                                <connections>
+                                    <action selector="btnRainyDayAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YIC-q0-f85"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtQ-1e-QOZ" userLabel="Btn_Rainy_Night">
+                                <rect key="frame" x="272" y="8" width="79" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="79" id="3pY-al-1bw"/>
+                                    <constraint firstAttribute="height" constant="52" id="Xfh-aC-alF"/>
+                                </constraints>
+                                <state key="normal" image="btn_rain_night"/>
+                                <connections>
+                                    <action selector="btnRainyNightAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6FR-uq-1ec"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apL-d7-J00" userLabel="Btn_Clear_Night">
+                                <rect key="frame" x="8" y="8" width="79" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="99C-za-Hv8"/>
+                                    <constraint firstAttribute="width" constant="79" id="Q5O-DE-aey"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="btn_clear_night"/>
+                                <connections>
+                                    <action selector="btnClearNightAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="XT5-EL-nxa"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="TtQ-1e-QOZ" secondAttribute="trailing" constant="8" id="J3L-Tl-sKg"/>
+                            <constraint firstItem="GXH-hk-7OP" firstAttribute="trailing" secondItem="3se-qz-xqx" secondAttribute="trailingMargin" constant="8" id="Pwo-M3-L6o"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="GXH-hk-7OP" secondAttribute="bottom" constant="8" id="apM-zN-ev9"/>
+                            <constraint firstItem="Rhe-LT-PAv" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="8" id="fEN-IW-uY0"/>
+                            <constraint firstItem="apL-d7-J00" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" constant="8" id="idq-Eb-JCl"/>
+                            <constraint firstItem="TtQ-1e-QOZ" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="topMargin" constant="8" id="m1O-Yt-PXG"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="Rhe-LT-PAv" secondAttribute="bottom" constant="8" id="vRl-74-cGU"/>
+                            <constraint firstItem="apL-d7-J00" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" constant="8" id="wIr-mo-Syv"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -28,4 +85,10 @@
             <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="btn_clear_day" width="303" height="200"/>
+        <image name="btn_clear_night" width="303" height="200"/>
+        <image name="btn_rain_day" width="303" height="200"/>
+        <image name="btn_rain_night" width="303" height="200"/>
+    </resources>
 </document>

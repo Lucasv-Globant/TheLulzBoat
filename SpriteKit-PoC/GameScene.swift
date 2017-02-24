@@ -12,10 +12,41 @@ import GameplayKit
 class GameScene: SKScene {
 
     var isZoomedIn = false
+    var oceanAtlas = SKTextureAtlas()
+    var oceanTexturesArray = [SKTexture]()
 
-    override func didMove(to view: SKView) {
+  var rain : SKEmitterNode!
+  override func didMove(to view: SKView) {
 
+      ////////////////////////////////////////////////////////////////////
+      // Water movement Option 1: using textures
+      //
+      oceanAtlas = SKTextureAtlas(named: "water")
+      var oceanNode = SKSpriteNode()
+      var names = [String]()
+      for name in oceanAtlas.textureNames {
+        names.append(name)
+      }
+
+      //Add the images in the progressive sequence
+      names = names.sorted(by: {$0 < $1})
+      for name in names {
+        oceanTexturesArray.insert(SKTexture(imageNamed: name),at:0)
+      }
+
+      //Add the same sequence, but reversed (so that the animation will go back and forth):
+      names = names.reversed()//names.sorted(by: {$0 > $1})
+      for name in names {
+        oceanTexturesArray.insert(SKTexture(imageNamed: name),at:0)
+      }
+      oceanNode.size = self.frame.size
+      oceanNode.position = CGPoint(x: 0, y: 0)
+      self.addChild(oceanNode)
+      //let oceanLoopAction = SKAction.
+      oceanNode.run(SKAction.repeatForever(SKAction.animate(with: oceanTexturesArray, timePerFrame: 0.2)))
       /////////////////////////////////////////////////////////////////
+      // Water movement Option 2: Fragment shaders
+      //
       //Setup a container sprite for the shader that makes the movement
       //let shaderContainerMove = SKSpriteNode(imageNamed: "dummypixel.png")
       //shaderContainerMove.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
@@ -33,23 +64,28 @@ class GameScene: SKScene {
 
       ////////////////////////////////////////////////////////////////////
       //Setup a container sprite for the shader that makes the reflections
-      let shaderContainerReflect = SKSpriteNode(imageNamed: "dummypixel.png")
-      shaderContainerReflect.position = CGPoint(x: 0/*self.frame.size.width/2*/, y: 0/*self.frame.size.width/2*/)
-      shaderContainerReflect.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
-      self.addChild(shaderContainerReflect)
+      //let shaderContainerReflect = SKSpriteNode(imageNamed: "dummypixel.png")
+      //shaderContainerReflect.position = CGPoint(x: 0/*self.frame.size.width/2*/, y: 0/*self.frame.size.width/2*/)
+      //shaderContainerReflect.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+      //self.addChild(shaderContainerReflect)
       //Create the shader from a shader-file
-      let shaderReflect = SKShader(fileNamed: "shader_water_reflection.fsh")
+      //let shaderReflect = SKShader(fileNamed: "shader_water_reflection.fsh")
       //Set variables that are used in the shader script
-      shaderReflect.uniforms = [SKUniform(name: "size", float: GLKVector3(v: (Float(self.frame.size.width),Float(self.frame.size.height),0)))]
+      //shaderReflect.uniforms = [SKUniform(name: "size", float: GLKVector3(v: (Float(self.frame.size.width),Float(self.frame.size.height),0)))]
       //add the shader to the sprite
-      shaderContainerReflect.shader = shaderReflect
-      shaderContainerReflect.zPosition = -1
+      //shaderContainerReflect.shader = shaderReflect
+      //shaderContainerReflect.zPosition = -1
 
       //////////////
       // The Boat
       let ship = SKSpriteNode(imageNamed: "boat-xxxhdpi")
-      ship.size = CGSize(width: 230, height: 750)
-      ship.position = CGPoint(x:0/*self.frame.size.width / 2*/, y:0/*self.frame.size.height / 2*/)
+      let shipHeight = self.frame.size.height / 2
+      let shipWidth = shipHeight/3
+      ship.size = CGSize(width: shipWidth, height: shipHeight)
+      let shipPosX = -40
+      let shipPosY = 0
+      ship.position = CGPoint(x:shipPosX, y:shipPosY)
+      ship.name = "ship"
       self.addChild(ship)
       ship.zPosition = 1
 
@@ -63,10 +99,17 @@ class GameScene: SKScene {
       //let followShipPath = SKAction.follow(shipPath!, asOffset: true, orientToPath: true, speed: 20.0)
       //ship.run(SKAction.sequence([followShipPath, followShipPath.reversed()]))
 
+      ///////////////////////////////
+      // Camera position
       let cameraNode = SKCameraNode()
       cameraNode.position = CGPoint(x: 0/*(scene?.size.width)!/2*/, y: 0/*(scene?.size.height)!/2*/)
       scene?.addChild(cameraNode)
       scene?.camera = cameraNode
+
+      ///////////////////////////////////////
+      // Weather
+
+
 
     }
 
@@ -88,14 +131,41 @@ class GameScene: SKScene {
       return bezierPath.cgPath
     }
 
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+  func toggleZoom() {
     let newScale = isZoomedIn ? 2 : 0.5
     isZoomedIn = !isZoomedIn
     let zoomInAction = SKAction.scale(by: CGFloat(newScale), duration: 1)
     scene?.camera?.run(zoomInAction)
   }
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    let touch = touches.first
+    let location = touch?.location(in: self)
+    let nodes = self.nodes(at: location!)
+    for node in nodes {
+      if node.name == "ship" {
+        toggleZoom()
+        break
+      }
+      else {
+        print("yee")
+      }
+    }
+
+
+  }
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+
+  func rainyDay() {
+    if (rain == nil) {
+    rain = SKEmitterNode(fileNamed: "RainParticle.sks")
+    }
+    rain?.position = CGPoint(x: 300, y: self.frame.size.height)
+    rain?.zPosition = 10
+    //rain?.particlePositionRange = CGVector(dx: 0, dy: 0)
+    self.addChild(rain!)
+
+  }
 }
