@@ -9,13 +9,22 @@
 import SpriteKit
 import GameplayKit
 
+enum weatherCondition {
+  case clearDay
+  case rainyDay
+  case clearNight
+  case rainyNight
+}
+
 class GameScene: SKScene {
 
+    var weather = weatherCondition.clearDay
     var isZoomedIn = false
     var oceanAtlas = SKTextureAtlas()
     var oceanTexturesArray = [SKTexture]()
 
   var rain : SKEmitterNode!
+  var darkCloud: SKSpriteNode!
   override func didMove(to view: SKView) {
 
       ////////////////////////////////////////////////////////////////////
@@ -159,13 +168,48 @@ class GameScene: SKScene {
     }
 
   func rainyDay() {
-    if (rain == nil) {
-    rain = SKEmitterNode(fileNamed: "RainParticle.sks")
-    }
-    rain?.position = CGPoint(x: 300, y: self.frame.size.height)
-    rain?.zPosition = 10
-    //rain?.particlePositionRange = CGVector(dx: 0, dy: 0)
-    self.addChild(rain!)
+    if weather != weatherCondition.rainyDay {
+      if rain == nil {
+      rain = SKEmitterNode(fileNamed: "RainParticle.sks")
+      }
+      rain?.position = CGPoint(x: 300, y: self.frame.size.height)
+      rain?.zPosition = 10
+      //rain?.particlePositionRange = CGVector(dx: 0, dy: 0)
+      self.addChild(rain!)
 
+      if darkCloud == nil {
+        darkCloud = SKSpriteNode(imageNamed: "cloud")
+        let cloudHeight = self.frame.size.height / 4
+        let cloudWidth = cloudHeight*2
+        darkCloud.size = CGSize(width: cloudWidth, height: cloudHeight)
+        let cloudPosX = -40
+        let cloudPosY = 400
+        darkCloud.position = CGPoint(x:cloudPosX, y:cloudPosY)
+        darkCloud.name = "cloud"
+        self.addChild(darkCloud)
+        darkCloud.zPosition = 11
+      }
+    }
+    weather = weatherCondition.rainyDay
+  }
+
+  func clearDay() {
+    if weather != weatherCondition.clearDay {
+      rain?.removeFromParent()
+      darkCloud?.removeFromParent()
+    }
+    weather = weatherCondition.clearDay
+  }
+
+  func clearNight() {
+    if weather != weatherCondition.clearNight {
+    }
+    weather = weatherCondition.clearNight
+  }
+
+  func rainyNight() {
+    if weather != weatherCondition.rainyNight {
+    }
+    weather = weatherCondition.rainyNight
   }
 }

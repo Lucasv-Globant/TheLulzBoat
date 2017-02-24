@@ -63,10 +63,12 @@ class GameViewController: UIViewController {
   }
 
   @IBAction func btnClearDayAction(_ sender: Any) {
+    shipScene.clearDay()
   }
 
 
   @IBAction func btnRainyDayAction(_ sender: Any) {
+    shipScene.rainyDay()
   }
 
 
