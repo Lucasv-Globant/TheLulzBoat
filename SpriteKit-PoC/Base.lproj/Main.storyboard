@@ -66,13 +66,29 @@
                                     <action selector="btnClearNightAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="XT5-EL-nxa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lr-I2-FUA">
+                                <rect key="frame" x="164.5" y="608.5" width="46" height="30"/>
+                                <color key="backgroundColor" red="0.034213844686746597" green="0.088503114879131317" blue="0.079268641769886017" alpha="0.070985991379310345" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="PJe-EC-N1U"/>
+                                    <constraint firstAttribute="width" constant="46" id="ad2-t8-Iyp"/>
+                                </constraints>
+                                <state key="normal" title="Path">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="followPath:" destination="BV1-FR-VrT" eventType="touchUpInside" id="62L-u0-y4n"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1lr-I2-FUA" firstAttribute="centerY" secondItem="GXH-hk-7OP" secondAttribute="centerY" id="15a-vQ-YVV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TtQ-1e-QOZ" secondAttribute="trailing" constant="8" id="J3L-Tl-sKg"/>
                             <constraint firstItem="GXH-hk-7OP" firstAttribute="trailing" secondItem="3se-qz-xqx" secondAttribute="trailingMargin" constant="8" id="Pwo-M3-L6o"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="GXH-hk-7OP" secondAttribute="bottom" constant="8" id="apM-zN-ev9"/>
                             <constraint firstItem="Rhe-LT-PAv" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="8" id="fEN-IW-uY0"/>
+                            <constraint firstItem="1lr-I2-FUA" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="gZo-eg-FMV"/>
                             <constraint firstItem="apL-d7-J00" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" constant="8" id="idq-Eb-JCl"/>
                             <constraint firstItem="TtQ-1e-QOZ" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="topMargin" constant="8" id="m1O-Yt-PXG"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="Rhe-LT-PAv" secondAttribute="bottom" constant="8" id="vRl-74-cGU"/>

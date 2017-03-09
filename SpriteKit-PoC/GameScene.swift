@@ -22,20 +22,22 @@ class GameScene: SKScene {
     var isZoomedIn = false
     var oceanAtlas = SKTextureAtlas()
     var oceanTexturesArray = [SKTexture]()
+    let lightSource = SKLightNode()
 
   var rain : SKEmitterNode!
   var darkCloud: SKSpriteNode!
   var darkCloud2: SKSpriteNode!
   var darkCloud3: SKSpriteNode!
   var dimPanel: SKSpriteNode!
-
+  var oceanNode = SKSpriteNode()
+  let ship = SpriteNodeWithLight()
   override func didMove(to view: SKView) {
 
       ////////////////////////////////////////////////////////////////////
       // Water movement Option 1: using textures
       //
       oceanAtlas = SKTextureAtlas(named: "water")
-      var oceanNode = SKSpriteNode()
+
       var names = [String]()
       for name in oceanAtlas.textureNames {
         names.append(name)
@@ -52,11 +54,12 @@ class GameScene: SKScene {
       for name in names {
         oceanTexturesArray.insert(SKTexture(imageNamed: name),at:0)
       }
-      oceanNode.size = self.frame.size
+      oceanNode.size = CGSize(width: self.frame.size.width * 2, height: self.frame.size.height * 2)
       oceanNode.position = CGPoint(x: 0, y: 0)
       self.addChild(oceanNode)
-      //let oceanLoopAction = SKAction.
       oceanNode.run(SKAction.repeatForever(SKAction.animate(with: oceanTexturesArray, timePerFrame: 0.2)))
+
+
       /////////////////////////////////////////////////////////////////
       // Water movement Option 2: Fragment shaders
       //
@@ -91,45 +94,45 @@ class GameScene: SKScene {
 
       //////////////
       // The Boat
-      let ship = SKSpriteNode(imageNamed: "boat-xxxhdpi")
       let shipHeight = self.frame.size.height / 2
       let shipWidth = shipHeight/3
       ship.size = CGSize(width: shipWidth, height: shipHeight)
       let shipPosX = -40
       let shipPosY = 0
-      ship.position = CGPoint(x:shipPosX, y:shipPosY)
+      ship.position = CGPoint(x: 57.5, y: 571.5)//CGPoint(x:shipPosX, y:shipPosY)
       ship.name = "ship"
       self.addChild(ship)
       ship.zPosition = 1
 
 
-      ////////////////////////
-      // Boat moving on path
-      //var path = CGMutablePath()
-      //path.move(to: CGPoint(x: 0, y: 0))
-      //path.addLine(to: CGPoint(x:50,y:100))
-      //let shipPath = loadPathFor4InchesDisplays()
-      //let followShipPath = SKAction.follow(shipPath!, asOffset: true, orientToPath: true, speed: 20.0)
-      //ship.run(SKAction.sequence([followShipPath, followShipPath.reversed()]))
+
 
       ///////////////////////////////
       // Camera position
       let cameraNode = SKCameraNode()
-      cameraNode.position = CGPoint(x: 0/*(scene?.size.width)!/2*/, y: 0/*(scene?.size.height)!/2*/)
+      cameraNode.position = CGPoint(x: 57.5, y: 571.5)//CGPoint(x: 0/*(scene?.size.width)!/2*/, y: 0/*(scene?.size.height)!/2*/)
       scene?.addChild(cameraNode)
       scene?.camera = cameraNode
 
+
       ///////////////////////////////////////
-      // Weather
+      // Playing around with Lights:
+      oceanNode.lightingBitMask = 1
+      oceanNode.shadowCastBitMask = 0
+      oceanNode.shadowedBitMask = 1
+      //addLight()
 
-
+      ////////////////////////////////
+      // configure boat
+      let setBoatTexture = SKAction.setTexture(SKTexture(imageNamed: "boat-xxxhdpi"))
+      ship.run(setBoatTexture)
 
     }
 
 
     func loadPathFor4InchesDisplays() -> CGPath? {
       let bezierPath = UIBezierPath()
-      bezierPath.move(to: CGPoint(x: 57.5, y: 571.5))
+      bezierPath.move(to: CGPoint(x:0, y: 0))//(x: 57.5, y: 571.5))
       bezierPath.addCurve(to: CGPoint(x: 57.5, y: 505.5), controlPoint1: CGPoint(x: 62.28, y: 560.98), controlPoint2: CGPoint(x: 53.6, y: 546.04))
       bezierPath.addCurve(to: CGPoint(x: 152.5, y: 405.5), controlPoint1: CGPoint(x: 62.5, y: 453.5), controlPoint2: CGPoint(x: 125.5, y: 429.5))
       bezierPath.addCurve(to: CGPoint(x: 195.5, y: 323.5), controlPoint1: CGPoint(x: 209.69, y: 354.66), controlPoint2: CGPoint(x: 195.5, y: 323.5))
@@ -229,19 +232,22 @@ class GameScene: SKScene {
   }
 
   func addNight() {
-    if dimPanel == nil {
-      dimPanel = SKSpriteNode(color: UIColor.black, size: self.size)
-      dimPanel.alpha = 0.55
-      dimPanel.zPosition = 100
-      dimPanel.position = CGPoint(x:0,y:0)//x: self.size.width/2, y: self.size.height/2)
-    }
-    self.addChild(dimPanel)
+    //if dimPanel == nil {
+    //  dimPanel = SKSpriteNode(color: UIColor.black, size: self.size)
+    //  dimPanel.alpha = 0.55
+    //  dimPanel.zPosition = 100
+    //  dimPanel.position = CGPoint(x:0,y:0)//x: self.size.width/2, y: self.size.height/2)
+    //}
+    //self.addChild(dimPanel)
+    oceanNode.colorBlendFactor = 0.25
+
   }
 
   func removeNight() {
-    if dimPanel != nil {
-      dimPanel.removeFromParent()
-    }
+    //if dimPanel != nil {
+    //  dimPanel.removeFromParent()
+    //}
+    oceanNode.colorBlendFactor = 0
   }
 
   func rainyDay() {
@@ -274,5 +280,51 @@ class GameScene: SKScene {
       addRain()
     }
     weather = weatherCondition.rainyNight
+  }
+
+  func addLight(){
+    lightSource.categoryBitMask = 1
+    lightSource.falloff = 0.0001
+    lightSource.ambientColor = UIColor.white //SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.85)
+    lightSource.lightColor = SKColor(red: 0.8, green: 0.8, blue: 0.4, alpha: 0.1)
+    lightSource.shadowColor = SKColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1)
+
+    ///lightSource.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+    lightSource.setScale(0.01)
+    lightSource.zPosition = 101
+    addChild(lightSource)
+  }
+
+  func moveShipOnPath() {
+    ////////////////////////
+    // Boat moving on path
+    var path = CGMutablePath()
+    path.move(to: CGPoint(x: 0, y: 0))
+    path.addLine(to: CGPoint(x:50,y:100))
+    let shipPath = loadPathFor4InchesDisplays()
+
+    let followShipPath = SKAction.follow(shipPath!, asOffset: true, orientToPath: true, speed: 1000.0)
+    ship.texture = SKTexture(imageNamed: "dot_white_500")
+    let prevSize = ship.size
+    let prevPos = ship.position
+
+    let resizeToDotX = SKAction.scaleX(to: 0.2, duration: 0.2)
+    let resizeToDotY = SKAction.scaleY(to: 0.1, duration: 0.2)
+
+    let resizeToShipX = SKAction.scaleX(to: 1, duration: 0.2)
+    let resizeToShipY = SKAction.scaleY(to: 1, duration: 0.2)
+
+    ship.addLight()
+    let setShipTexture = SKAction.setTexture(SKTexture(imageNamed: "boat-xxxhdpi"))
+    //let resizeToShip = SKAction.resize(toWidth: prevSize.width, height: prevSize.height, duration: 0.3)
+    ship.run(SKAction.sequence([resizeToDotX, resizeToDotY, followShipPath, followShipPath.reversed(), resizeToShipY, resizeToShipX, setShipTexture]))
+    ship.position = prevPos
+    
+  }
+
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesEnded(touches, with: event)
+    let location = touches.first?.location(in: self)
+    lightSource.position = location!
   }
 }

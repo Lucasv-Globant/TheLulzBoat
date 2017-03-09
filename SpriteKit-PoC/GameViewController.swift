@@ -80,4 +80,8 @@ class GameViewController: UIViewController {
     shipScene.clearNight()
   }
 
+  @IBAction func followPath(_ sender: Any) {
+    shipScene.moveShipOnPath()
+  }
+
 }
